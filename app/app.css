@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Source Serif 4", ui-serif, Georgia, Cambria, "Times New Roman",
+    serif;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-neutral-900;
+}
+
+.chapter-content {
+  @apply mt-8 text-lg leading-[1.75] text-neutral-800;
+  font-family: var(--font-serif);
+}
+
+.chapter-content > * + * {
+  @apply mt-5;
+}
+
+.chapter-content p {
+  @apply leading-[1.8];
+}
+
+.chapter-content h1 {
+  @apply mt-10 text-2xl font-semibold tracking-tight text-neutral-900;
+  font-family: var(--font-sans);
+}
+
+.chapter-content h2 {
+  @apply mt-10 text-xl font-semibold tracking-tight text-neutral-900;
+  font-family: var(--font-sans);
+}
+
+.chapter-content h3 {
+  @apply mt-8 text-lg font-semibold text-neutral-900;
+  font-family: var(--font-sans);
+}
+
+.chapter-content a {
+  @apply text-blue-700 underline underline-offset-2 hover:text-blue-800;
+}
+
+.chapter-content strong {
+  @apply font-semibold text-neutral-900;
+}
+
+.chapter-content ul {
+  @apply list-disc space-y-2 pl-6;
+}
+
+.chapter-content ol {
+  @apply list-decimal space-y-2 pl-6;
+}
+
+.chapter-content blockquote {
+  @apply border-l-4 border-neutral-200 pl-4 italic text-neutral-600;
+}
+
+.chapter-content hr {
+  @apply border-neutral-200;
+}
+
+.chapter-content img {
+  @apply mx-auto block h-auto w-full max-w-2xl rounded-xl border border-neutral-200;
+}
+
+.chapter-content figure figcaption {
+  @apply mt-2 text-center text-sm text-neutral-500;
+}
+
+.chapter-content table {
+  @apply w-full border-collapse text-left text-base;
+}
+
+.chapter-content th,
+.chapter-content td {
+  @apply border border-neutral-200 px-3 py-2;
+}
+
+.chapter-content pre {
+  @apply overflow-x-auto rounded-lg bg-neutral-100 p-4 text-base;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
