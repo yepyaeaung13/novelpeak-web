@@ -17,7 +17,7 @@ body {
 
 .chapter-content {
   @apply mt-8 text-base sm:text-xl leading-[1.85] break-words text-neutral-300;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   overflow-wrap: break-word;
   word-break: normal;
   line-break: normal;
