@@ -5,6 +5,11 @@ export type Book = {
   cover: string;
   description?: string;
   createdAt: string;
+  bookType?: "Novel" | "Light Novel" | "Short Story";
+  genres?: string[];
+  status?: "Ongoing" | "Completed" | "Hiatus" | "Dropped";
+  language?: "Burmese" | "English";
+  publicationStatus?: "Draft" | "Published";
 };
 
 export type Chapter = {

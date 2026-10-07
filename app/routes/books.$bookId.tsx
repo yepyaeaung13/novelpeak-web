@@ -1,3 +1,4 @@
+import { BookMetadata } from "~/components/BookMetadata";
 import { data, Link } from "react-router";
 import type { Route } from "./+types/books.$bookId";
 import { getBook, getChapters, isNotFoundError } from "~/lib/api";
@@ -68,6 +69,8 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
             {book.title}
           </h1>
           <p className="mt-1 text-sm text-neutral-400">by {book.author}</p>
+
+          <BookMetadata book={book} />
 
           {book.description ? (
             <p className="mt-4 max-w-2xl text-neutral-300">{book.description}</p>

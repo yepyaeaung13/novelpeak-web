@@ -85,3 +85,10 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 ---
 
 Built with ❤️ using React Router.
+
+## NovelPeak book metadata
+
+Book cards show type, story status, and genres. Book detail pages also show language
+and the chapter count. Configure `VITE_API_BASE_URL` to point at the NovelPeak API.
+The public API hides draft books and their chapters; deploy the API update alongside
+this client. Existing books without metadata use compatible display defaults.

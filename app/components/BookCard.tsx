@@ -23,6 +23,8 @@ export function BookCard({ book }: BookCardProps) {
           {book.title}
         </h3>
         <p className="line-clamp-1 text-xs text-neutral-400">{book.author}</p>
+        <p className="mt-1 text-xs text-neutral-500">{book.bookType ?? "Novel"} · {book.status ?? "Ongoing"}</p>
+        {!!book.genres?.length && <p className="line-clamp-1 text-xs text-neutral-500">{book.genres.join(" · ")}</p>}
       </div>
     </Link>
   );
