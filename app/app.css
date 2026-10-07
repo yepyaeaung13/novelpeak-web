@@ -8,15 +8,15 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
-  @apply bg-white text-neutral-900;
+  @apply bg-neutral-950 text-neutral-200;
 }
 
 .chapter-content {
-  @apply mt-8 text-lg leading-[1.75] text-neutral-800;
+  @apply mt-8 text-lg leading-[1.75] text-neutral-300;
   font-family: var(--font-serif);
 }
 
@@ -29,26 +29,26 @@ body {
 }
 
 .chapter-content h1 {
-  @apply mt-10 text-2xl font-semibold tracking-tight text-neutral-900;
+  @apply mt-10 text-2xl font-semibold tracking-tight text-neutral-50;
   font-family: var(--font-sans);
 }
 
 .chapter-content h2 {
-  @apply mt-10 text-xl font-semibold tracking-tight text-neutral-900;
+  @apply mt-10 text-xl font-semibold tracking-tight text-neutral-50;
   font-family: var(--font-sans);
 }
 
 .chapter-content h3 {
-  @apply mt-8 text-lg font-semibold text-neutral-900;
+  @apply mt-8 text-lg font-semibold text-neutral-100;
   font-family: var(--font-sans);
 }
 
 .chapter-content a {
-  @apply text-blue-700 underline underline-offset-2 hover:text-blue-800;
+  @apply text-blue-400 underline underline-offset-2 hover:text-blue-300;
 }
 
 .chapter-content strong {
-  @apply font-semibold text-neutral-900;
+  @apply font-semibold text-neutral-100;
 }
 
 .chapter-content ul {
@@ -60,15 +60,15 @@ body {
 }
 
 .chapter-content blockquote {
-  @apply border-l-4 border-neutral-200 pl-4 italic text-neutral-600;
+  @apply border-l-4 border-neutral-700 pl-4 italic text-neutral-400;
 }
 
 .chapter-content hr {
-  @apply border-neutral-200;
+  @apply border-neutral-800;
 }
 
 .chapter-content img {
-  @apply mx-auto block h-auto w-full max-w-2xl rounded-xl border border-neutral-200;
+  @apply mx-auto block h-auto w-full max-w-2xl rounded-xl border border-neutral-800;
 }
 
 .chapter-content figure figcaption {
@@ -81,10 +81,10 @@ body {
 
 .chapter-content th,
 .chapter-content td {
-  @apply border border-neutral-200 px-3 py-2;
+  @apply border border-neutral-800 px-3 py-2;
 }
 
 .chapter-content pre {
-  @apply overflow-x-auto rounded-lg bg-neutral-100 p-4 text-base;
+  @apply overflow-x-auto rounded-lg bg-neutral-900 p-4 text-base text-neutral-200;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }

@@ -20,7 +20,7 @@ export function CoverImage({
   if (!url || hasFailed) {
     return (
       <div
-        className={`flex items-center justify-center bg-neutral-100 text-[11px] font-medium uppercase tracking-widest text-neutral-400 ${className ?? ""}`}
+        className={`flex items-center justify-center bg-neutral-800 text-[11px] font-medium uppercase tracking-widest text-neutral-500 ${className ?? ""}`}
       >
         No cover
       </div>

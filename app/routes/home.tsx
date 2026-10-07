@@ -30,12 +30,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <div>
-      <section className="border-b border-neutral-200 bg-neutral-50">
+      <section className="border-b border-neutral-800 bg-neutral-900">
         <div className="mx-auto max-w-6xl px-4 py-14">
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-50 sm:text-4xl">
             Read your next chapter
           </h1>
-          <p className="mt-3 max-w-xl text-neutral-600">
+          <p className="mt-3 max-w-xl text-neutral-400">
             Explore the library and read every chapter online, on any device.
           </p>
         </div>

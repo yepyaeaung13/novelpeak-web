@@ -57,21 +57,21 @@ export default function ReadChapter({ loaderData }: Route.ComponentProps) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <nav className="text-sm text-neutral-500">
-        <Link to="/" className="hover:text-neutral-900">
+        <Link to="/" className="hover:text-neutral-100">
           Home
         </Link>
         <span className="mx-2">/</span>
-        <Link to={`/books/${book.id}`} className="hover:text-neutral-900">
+        <Link to={`/books/${book.id}`} className="hover:text-neutral-100">
           {book.title}
         </Link>
       </nav>
 
       <article className="mt-8">
-        <header className="border-b border-neutral-200 pb-6">
-          <p className="text-xs font-medium uppercase tracking-wider text-neutral-400">
+        <header className="border-b border-neutral-800 pb-6">
+          <p className="text-xs font-medium uppercase tracking-wider text-neutral-500">
             Chapter {chapter.chapterNumber}
           </p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-50 sm:text-3xl">
             {chapter.title}
           </h1>
         </header>
@@ -79,15 +79,15 @@ export default function ReadChapter({ loaderData }: Route.ComponentProps) {
         <ChapterBody html={chapter.content || "<p>No content.</p>"} />
       </article>
 
-      <nav className="mt-12 flex items-center justify-between gap-4 border-t border-neutral-200 pt-6">
+      <nav className="mt-12 flex items-center justify-between gap-4 border-t border-neutral-800 pt-6">
         {previous ? (
           <Link
             to={`/books/${book.id}/chapters/${previous.id}`}
             prefetch="intent"
-            className="min-w-0 rounded-lg border border-neutral-200 px-4 py-2 text-sm transition hover:bg-neutral-50"
+            className="min-w-0 rounded-lg border border-neutral-800 px-4 py-2 text-sm transition hover:bg-neutral-800"
           >
-            <span className="block text-xs text-neutral-400">Previous</span>
-            <span className="block truncate font-medium text-neutral-900">
+            <span className="block text-xs text-neutral-500">Previous</span>
+            <span className="block truncate font-medium text-neutral-100">
               {previous.title}
             </span>
           </Link>
@@ -99,17 +99,17 @@ export default function ReadChapter({ loaderData }: Route.ComponentProps) {
           <Link
             to={`/books/${book.id}/chapters/${next.id}`}
             prefetch="intent"
-            className="min-w-0 rounded-lg border border-neutral-200 px-4 py-2 text-right text-sm transition hover:bg-neutral-50"
+            className="min-w-0 rounded-lg border border-neutral-800 px-4 py-2 text-right text-sm transition hover:bg-neutral-800"
           >
-            <span className="block text-xs text-neutral-400">Next</span>
-            <span className="block truncate font-medium text-neutral-900">
+            <span className="block text-xs text-neutral-500">Next</span>
+            <span className="block truncate font-medium text-neutral-100">
               {next.title}
             </span>
           </Link>
         ) : (
           <Link
             to={`/books/${book.id}`}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500"
           >
             Back to novel
           </Link>

@@ -46,11 +46,11 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <nav className="text-sm text-neutral-500">
-        <Link to="/" className="hover:text-neutral-900">
+        <Link to="/" className="hover:text-neutral-100">
           Home
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-neutral-900">{book.title}</span>
+        <span className="text-neutral-100">{book.title}</span>
       </nav>
 
       <div className="mt-6 grid gap-8 md:grid-cols-[240px_1fr]">
@@ -59,18 +59,18 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
             src={book.cover}
             alt={`Cover of ${book.title}`}
             loading="eager"
-            className="aspect-2/3 w-full rounded-xl border border-neutral-200 object-cover shadow-sm"
+            className="aspect-2/3 w-full rounded-xl border border-neutral-800 object-cover shadow-lg shadow-black/40"
           />
         </div>
 
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-50 sm:text-3xl">
             {book.title}
           </h1>
-          <p className="mt-1 text-sm text-neutral-500">by {book.author}</p>
+          <p className="mt-1 text-sm text-neutral-400">by {book.author}</p>
 
           {book.description ? (
-            <p className="mt-4 max-w-2xl text-neutral-700">{book.description}</p>
+            <p className="mt-4 max-w-2xl text-neutral-300">{book.description}</p>
           ) : null}
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -78,7 +78,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
               <Link
                 to={`/books/${book.id}/chapters/${firstChapter.id}`}
                 prefetch="intent"
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500"
               >
                 {chapters.length > 1 ? "Start reading" : "Read chapter"}
               </Link>
@@ -98,23 +98,23 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
               This novel has no chapters published yet.
             </p>
           ) : (
-            <ol className="mt-4 divide-y divide-neutral-200 overflow-hidden rounded-xl border border-neutral-200 bg-white">
+            <ol className="mt-4 divide-y divide-neutral-800 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
               {chapters.map((chapter) => (
                 <li key={chapter.id}>
                   <Link
                     to={`/books/${book.id}/chapters/${chapter.id}`}
                     prefetch="intent"
-                    className="flex items-center justify-between gap-4 px-4 py-3 transition hover:bg-neutral-50"
+                    className="flex items-center justify-between gap-4 px-4 py-3 transition hover:bg-neutral-800"
                   >
                     <span className="min-w-0">
-                      <span className="block text-xs text-neutral-400">
+                      <span className="block text-xs text-neutral-500">
                         Chapter {chapter.chapterNumber}
                       </span>
-                      <span className="block truncate text-sm font-medium text-neutral-900">
+                      <span className="block truncate text-sm font-medium text-neutral-100">
                         {chapter.title}
                       </span>
                     </span>
-                    <span className="shrink-0 text-xs text-neutral-400">Read</span>
+                    <span className="shrink-0 text-xs text-neutral-500">Read</span>
                   </Link>
                 </li>
               ))}
