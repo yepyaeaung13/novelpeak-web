@@ -8,23 +8,45 @@ import {
   type ChapterSummary,
 } from "~/lib/types";
 import { ChapterBody } from "~/components/ChapterBody";
+import { JsonLd } from "~/components/JsonLd";
+import {
+  absoluteUrl,
+  bookPath,
+  breadcrumbJsonLd,
+  chapterJsonLd,
+  chapterPath,
+  pageMeta,
+  SITE_NAME,
+  siteOrigin,
+} from "~/lib/seo";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   if (!loaderData) {
-    return [{ title: "Chapter not found — NovelPeak" }];
+    return pageMeta({
+      title: `Chapter not found — ${SITE_NAME}`,
+      description: "The chapter you are looking for does not exist.",
+      url: "",
+    });
   }
-  const { book, chapter } = loaderData;
-  return [
-    { title: `${chapter.title} · ${book.title} — NovelPeak` },
-    { name: "description", content: excerpt(chapter.content, 150) },
-  ];
+
+  const { book, chapter, origin } = loaderData;
+
+  return pageMeta({
+    title: `${chapter.title} · ${book.title} — ${SITE_NAME}`,
+    description: excerpt(chapter.content, 155),
+    url: absoluteUrl(origin, chapterPath(book.id, chapter.id)),
+    image: book.cover || null,
+    type: "article",
+  });
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params, request }: Route.LoaderArgs) {
   const { bookId, chapterId } = params;
   if (!bookId || !chapterId) {
     throw data("Chapter not found", { status: 404 });
   }
+
+  const origin = siteOrigin(request);
 
   try {
     const [book, chapters, chapter] = await Promise.all([
@@ -39,7 +61,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     const next: ChapterSummary | null =
       index >= 0 && index < ordered.length - 1 ? toChapterSummary(ordered[index + 1]) : null;
 
-    return { book, chapter, previous, next };
+    return { book, chapter, previous, next, origin };
   } catch (error) {
     if (isNotFoundError(error)) {
       throw data("Chapter not found", { status: 404 });
@@ -52,10 +74,21 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 export default function ReadChapter({ loaderData }: Route.ComponentProps) {
-  const { book, chapter, previous, next } = loaderData;
+  const { book, chapter, previous, next, origin } = loaderData;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
+      <JsonLd
+        data={[
+          chapterJsonLd(book, chapter, origin),
+          breadcrumbJsonLd(origin, [
+            { name: "Home", path: "/" },
+            { name: book.title, path: bookPath(book.id) },
+            { name: chapter.title, path: chapterPath(book.id, chapter.id) },
+          ]),
+        ]}
+      />
+
       <nav className="text-sm text-neutral-500">
         <Link to="/" className="hover:text-neutral-100">
           Home

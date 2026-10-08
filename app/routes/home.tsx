@@ -1,8 +1,10 @@
 import { data, Link } from "react-router";
 import type { Route } from "./+types/home";
 import { getBooks } from "~/lib/api";
+import { resolveImageUrl } from "~/lib/image";
 import { BookCard } from "~/components/BookCard";
 import { CoverImage } from "~/components/CoverImage";
+import { JsonLd } from "~/components/JsonLd";
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -10,22 +12,40 @@ import {
   SparkIcon,
   StackIcon,
 } from "~/components/icons";
+import {
+  absoluteUrl,
+  pageMeta,
+  SITE_NAME,
+  SITE_TAGLINE,
+  siteOrigin,
+  webSiteJsonLd,
+} from "~/lib/seo";
 import type { Book } from "~/lib/types";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "NovelPeak — read novels online" },
-    {
-      name: "description",
-      content: "Browse and read novels online for free.",
-    },
-  ];
+export function meta({ loaderData }: Route.MetaArgs) {
+  const origin = loaderData?.origin ?? "";
+  const cover = loaderData?.featuredCover ?? null;
+
+  return pageMeta({
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: `Browse and read novels online for free on ${SITE_NAME}. Read every chapter on any device.`,
+    url: absoluteUrl(origin, "/"),
+    image: cover,
+  });
 }
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const origin = siteOrigin(request);
+
   try {
     const books = await getBooks();
-    return { books };
+    const [featured] = [...books].sort(byNewest);
+
+    return {
+      books,
+      origin,
+      featuredCover: featured ? resolveImageUrl(featured.cover) : null,
+    };
   } catch (error) {
     throw data(
       error instanceof Error ? error.message : "Could not load novels",
@@ -41,18 +61,19 @@ const addedOn = (value?: string) =>
   value ? new Date(value).toISOString().slice(0, 10) : null;
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { books } = loaderData;
+  const { books, origin } = loaderData;
 
   if (books.length === 0) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-28 text-center">
+        <JsonLd data={webSiteJsonLd(origin)} />
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-neutral-800 bg-neutral-900">
           <BookOpenIcon className="h-6 w-6 text-neutral-500" />
         </div>
         <h1 className="mt-6 text-2xl font-semibold tracking-tight text-neutral-50">
           The library is empty
         </h1>
-        <p className="mt-2 text-sm text-neutral-400">
+        <p className="mt-6 text-sm text-neutral-400">
           No novels have been published yet. Check back soon.
         </p>
       </div>
@@ -64,6 +85,22 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <div>
+      <JsonLd
+        data={[
+          webSiteJsonLd(origin),
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: books.map((book, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              url: absoluteUrl(origin, `/books/${book.id}`),
+              name: book.title,
+            })),
+          },
+        ]}
+      />
+
       {/* Featured novel */}
       <section className="relative overflow-hidden border-b border-neutral-800">
         <div

@@ -4,23 +4,46 @@ import type { Route } from "./+types/books.$bookId";
 import { getBook, getChapters, isNotFoundError } from "~/lib/api";
 import { sortByChapterNumber, toChapterSummary } from "~/lib/types";
 import { CoverImage } from "~/components/CoverImage";
+import { JsonLd } from "~/components/JsonLd";
+import {
+  absoluteUrl,
+  bookJsonLd,
+  bookPath,
+  breadcrumbJsonLd,
+  pageMeta,
+  SITE_NAME,
+  siteOrigin,
+} from "~/lib/seo";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   if (!loaderData) {
-    return [{ title: "Novel not found — NovelPeak" }];
+    return pageMeta({
+      title: `Novel not found — ${SITE_NAME}`,
+      description: "The novel you are looking for does not exist.",
+      url: "",
+    });
   }
-  const { book } = loaderData;
-  return [
-    { title: `${book.title} — NovelPeak` },
-    { name: "description", content: book.description || `Read ${book.title} online.` },
-  ];
+
+  const { book, origin } = loaderData;
+
+  return pageMeta({
+    title: `${book.title} — ${SITE_NAME}`,
+    description:
+      book.description ||
+      `Read ${book.title} by ${book.author} online, chapter by chapter.`,
+    url: absoluteUrl(origin, bookPath(book.id)),
+    image: book.cover || null,
+    type: "book",
+  });
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params, request }: Route.LoaderArgs) {
   const bookId = params.bookId;
   if (!bookId) {
     throw data("Novel not found", { status: 404 });
   }
+
+  const origin = siteOrigin(request);
 
   try {
     const [book, chapters] = await Promise.all([
@@ -28,7 +51,11 @@ export async function loader({ params }: Route.LoaderArgs) {
       getChapters(bookId),
     ]);
 
-    return { book, chapters: sortByChapterNumber(chapters).map(toChapterSummary) };
+    return {
+      book,
+      origin,
+      chapters: sortByChapterNumber(chapters).map(toChapterSummary),
+    };
   } catch (error) {
     if (isNotFoundError(error)) {
       throw data("Novel not found", { status: 404 });
@@ -41,11 +68,21 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 export default function BookDetail({ loaderData }: Route.ComponentProps) {
-  const { book, chapters } = loaderData;
+  const { book, chapters, origin } = loaderData;
   const firstChapter = chapters[0];
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
+      <JsonLd
+        data={[
+          bookJsonLd(book, origin),
+          breadcrumbJsonLd(origin, [
+            { name: "Home", path: "/" },
+            { name: book.title, path: bookPath(book.id) },
+          ]),
+        ]}
+      />
+
       <nav className="text-sm text-neutral-500">
         <Link to="/" className="hover:text-neutral-100">
           Home
