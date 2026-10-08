@@ -9,6 +9,7 @@ import {
 } from "~/lib/types";
 import { ChapterBody } from "~/components/ChapterBody";
 import { JsonLd } from "~/components/JsonLd";
+import { ShareButtons } from "~/components/ShareButtons";
 import {
   absoluteUrl,
   bookPath,
@@ -107,6 +108,11 @@ export default function ReadChapter({ loaderData }: Route.ComponentProps) {
           <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-50 sm:text-3xl">
             {chapter.title}
           </h1>
+          <ShareButtons
+            className="mt-5"
+            url={absoluteUrl(origin, chapterPath(book.id, chapter.id))}
+            title={`${chapter.title} · ${book.title}`}
+          />
         </header>
 
         <ChapterBody html={chapter.content || "<p>No content.</p>"} />

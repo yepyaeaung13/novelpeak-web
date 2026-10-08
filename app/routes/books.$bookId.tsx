@@ -5,6 +5,7 @@ import { getBook, getChapters, isNotFoundError } from "~/lib/api";
 import { sortByChapterNumber, toChapterSummary } from "~/lib/types";
 import { CoverImage } from "~/components/CoverImage";
 import { JsonLd } from "~/components/JsonLd";
+import { ShareButtons } from "~/components/ShareButtons";
 import {
   absoluteUrl,
   bookJsonLd,
@@ -118,7 +119,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
               <Link
                 to={`/books/${book.id}/chapters/${firstChapter.id}`}
                 prefetch="intent"
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500"
+                className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
               >
                 {chapters.length > 1 ? "Start reading" : "Read chapter"}
               </Link>
@@ -128,6 +129,11 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
             <span className="text-sm text-neutral-500">
               {chapters.length} {chapters.length === 1 ? "chapter" : "chapters"}
             </span>
+            <ShareButtons
+              className="ml-auto"
+              url={absoluteUrl(origin, bookPath(book.id))}
+              title={`${book.title} by ${book.author}`}
+            />
           </div>
 
           <h2 className="mt-10 text-sm font-semibold uppercase tracking-wider text-neutral-500">
