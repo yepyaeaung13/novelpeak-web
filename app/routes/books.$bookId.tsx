@@ -73,7 +73,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
   const firstChapter = chapters[0];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto max-w-6xl overflow-x-clip px-4 py-8">
       <JsonLd
         data={[
           bookJsonLd(book, origin),
@@ -84,7 +84,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
         ]}
       />
 
-      <nav className="text-sm text-neutral-500">
+      <nav className="text-sm break-words text-neutral-500">
         <Link to="/" className="hover:text-neutral-100">
           Home
         </Link>
@@ -92,8 +92,8 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
         <span className="text-neutral-100">{book.title}</span>
       </nav>
 
-      <div className="mt-6 grid gap-8 md:grid-cols-[240px_1fr]">
-        <div>
+      <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+        <div className="mx-auto w-40 sm:w-48 md:mx-0 md:w-full">
           <CoverImage
             src={book.cover}
             alt={`Cover of ${book.title}`}
@@ -102,8 +102,8 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
           />
         </div>
 
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-50 sm:text-3xl">
+        <div className="min-w-0">
+          <h1 className="break-words text-2xl font-semibold tracking-tight text-neutral-50 sm:text-3xl">
             {book.title}
           </h1>
           <p className="mt-1 text-sm text-neutral-400">by {book.author}</p>
@@ -111,7 +111,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
           <BookMetadata book={book} />
 
           {book.description ? (
-            <p className="mt-4 max-w-2xl text-neutral-300">{book.description}</p>
+            <p className="mt-4 max-w-2xl break-words text-neutral-300">{book.description}</p>
           ) : null}
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -156,7 +156,7 @@ export default function BookDetail({ loaderData }: Route.ComponentProps) {
                       <span className="block text-xs text-neutral-500">
                         Chapter {chapter.chapterNumber}
                       </span>
-                      <span className="block truncate text-sm font-medium text-neutral-100">
+                      <span className="line-clamp-2 block break-words text-sm font-medium text-neutral-100">
                         {chapter.title}
                       </span>
                     </span>
